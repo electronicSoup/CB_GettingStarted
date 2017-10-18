@@ -3,11 +3,16 @@
  *
  * @author John Whitmore
  *
- * This file contains simple example code to drive the GPIO pins of the
- * cinnamonBun. Basically illuminating LEDs by driving GPIO Output pins
- * and monitoring the status of a switch by reading a GPIO Input pin. 
+ * This file contains a very simple example of driving the GPIO Output pin
+ * of the cinnamonBun to "transmit" Morse code using an LED. The example is
+ * coded in a Synchronous manner to demonstrate the limitations.
  *
  * The example is used in the YouTube video:
+ * "004 - cinnamonBun: Synchronous Program"
+ * (Episode 4 in the cinnamonBun Getting Started series)
+ * https://youtu.be/br9gOcxSU1U
+ *
+ * This example builds on the previous episode of the series:
  * "03 - cinnamonBun: Hello World"
  * (Episode 3 in the cinnamonBun Getting Started series)
  * https://youtu.be/MWarznfr7ts
@@ -28,18 +33,23 @@
  *
  */
 #include <xc.h>
+#include <stdint.h>
 
-#define DELAY for(delay = 0x00; delay < 0x3ffff; delay++) Nop();
+#include "morse.h"
 
 int main(void)
 {
-    long delay;
+    uint32_t delay;
 
+    /*
+     * GPIO Setup
+     * Port D lower Byte Digital IO Pins
+     */
     ANSELD = 0x00;
     TRISDbits.TRISD0 = 0;
     TRISDbits.TRISD1 = 0;
     TRISDbits.TRISD2 = 1;
-    
+        
     delay = 0;
     LATDbits.LATD0 = 1;
     
@@ -50,7 +60,8 @@ int main(void)
             LATDbits.LATD0 = ~LATDbits.LATD0;
         }
         
-        LATDbits.LATD1 = ~PORTDbits.RD2;
+        if(PORTDbits.RD2 == 0)
+            morse_tx_the();
     }
     return(0);
 }
