@@ -3,19 +3,18 @@
  *
  * @author John Whitmore
  *
- * This file contains a very simple example of driving the GPIO Output pin
- * of the cinnamonBun to "transmit" Morse code using an LED. The example is
- * coded in a Synchronous manner to demonstrate the limitations.
+ * This file contains an example of setting up a dsPIC33EP256MU806 Hardware
+ * timer, and catching the resulting generated interrupt.
  *
- * The example is used in the YouTube video:
+ * This example is used in the YouTube Video:
+ * "005 - cinnamonBun: Hardware Timer Interrupt"
+ * (Episode 5 in the cinnamonBun Getting Started series)
+ * https://youtu.be/Yrnlxmp2it4
+ *
+ * This example builds on the previous episode of the series:
  * "004 - cinnamonBun: Synchronous Program"
  * (Episode 4 in the cinnamonBun Getting Started series)
  * https://youtu.be/br9gOcxSU1U
- *
- * This example builds on the previous episode of the series:
- * "03 - cinnamonBun: Hello World"
- * (Episode 3 in the cinnamonBun Getting Started series)
- * https://youtu.be/MWarznfr7ts
  *
  * Copyright 2017 John Whitmore <jwhitmore@electronicsoup.com>
  *
@@ -37,6 +36,14 @@
 
 #include "morse.h"
 
+void __attribute__((__interrupt__, __no_auto_psv__)) _T1Interrupt(void)
+{
+    IFS0bits.T1IF = 0;        // Clear the Interrupt flag
+    TMR1 = 0x00;              // Reset the timer back to zero
+    
+    LATDbits.LATD1 = ~LATDbits.LATD1;
+}
+
 int main(void)
 {
     uint32_t delay;
@@ -49,7 +56,21 @@ int main(void)
     TRISDbits.TRISD0 = 0;
     TRISDbits.TRISD1 = 0;
     TRISDbits.TRISD2 = 1;
-        
+    
+    /*
+     * Timer Setup
+     */
+    T1CONbits.TCS = 0;       // Internal CPU Clock is input
+    T1CONbits.TGATE = 0;     // Not a gated timer
+    T1CONbits.TCKPS = 0b11;  // Divide by 256
+    IPC0bits.T1IP = 0b111;   // Higest Prioirity
+    IFS0bits.T1IF = 0;       // Clear the Interrupt flag
+    IEC0bits.T1IE = 1;       // Enable Timer 1 Interrupt
+    
+    TMR1 = 0x00;             // Start counting at zero
+    PR1 = 0x3fff;            // Count up to 0x3fff and then Interrupt
+    T1CONbits.TON = 1;       // And turn on the timer
+    
     delay = 0;
     LATDbits.LATD0 = 1;
     
@@ -60,8 +81,8 @@ int main(void)
             LATDbits.LATD0 = ~LATDbits.LATD0;
         }
         
-        if(PORTDbits.RD2 == 0)
-            morse_tx_the();
+//        if(PORTDbits.RD2 == 0)
+//            morse_tx_the();
     }
     return(0);
 }

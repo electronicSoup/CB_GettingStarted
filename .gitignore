@@ -1,2 +1,6 @@
 /build/default/
 /dist/default/
+/nbproject/*.mk
+/nbproject/Makefile-genesis.properties
+/nbproject/Package-default.bash
+/nbproject/private/

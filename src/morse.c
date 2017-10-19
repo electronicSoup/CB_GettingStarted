@@ -8,10 +8,13 @@
  * implementated as a synchronous function to demonstrate the limitations
  * of this style of code.
  *
- * The example is used in the YouTube video:
+ * The example is first used in the YouTube video:
  * "004 - cinnamonBun: Synchronous Program"
  * (Episode 4 in the cinnamonBun Getting Started series)
  * https://youtu.be/br9gOcxSU1U
+ *
+ * The file is used in subsiquent episodes in the cinnamonBun Getting Started
+ * playlist.
  *
  * Copyright 2017 John Whitmore <jwhitmore@electronicsoup.com>
  *
