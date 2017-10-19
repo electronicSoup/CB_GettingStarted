@@ -2,9 +2,11 @@
 /dist/default/
 /nbproject/*.mk
 /nbproject/Makefile-genesis.properties
-/nbproject/Package-default.bash
+/nbproject/*.bash
 /nbproject/private/
 /dist/Sync/
 /build/Sync/
 /dist/Async/
 /build/Async/
+/dist/Good_API/
+/build/Good_API/

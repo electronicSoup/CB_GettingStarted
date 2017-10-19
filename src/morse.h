@@ -1,17 +1,15 @@
 /**
- * @file morse.c
+ * @file morse.h
  *
  * @author John Whitmore
  *
- * This file contains the public API declaration of Function to transmit the
- * Morse Code for the word "the" using an LED.
- *
- * The API function is implementated in the file morse.c
+ * This file contains the public API declarations of Functions provided by
+ * the Morse Module implemeted in morse.c.
  *
  * The example is first used in the YouTube video:
- * "004 - cinnamonBun: Synchronous Program"
- * (Episode 4 in the cinnamonBun Getting Started series)
- * https://youtu.be/br9gOcxSU1U
+ * "007 - Circular Buffer implementation in C"
+ * (Episode 7 in the cinnamonBun Getting Started series)
+ * https://youtu.be/I8xatqqza6s
  *
  * The file is used in subsiquent episodes in the cinnamonBun Getting Started
  * playlist.
@@ -31,4 +29,11 @@
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  */
-extern void morse_tx_the(void);
+
+/*
+ * The module's initilaisation function, morse_init(), must be called prior to
+ * using any of the other API functions of this module. Failure to do so will
+ * result in unknown behaviour.
+ */
+extern void morse_init(void);
+extern void morse_tx(char *);

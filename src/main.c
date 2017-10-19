@@ -3,19 +3,19 @@
  *
  * @author John Whitmore
  *
- * This file contains an example of a synchronous and asynchronous
- * implementation of a simple API function.
+ * This file contains the code to exercise the improved Morse API which accepts
+ * a null terminated string, instead of hard coding "the".
  *
  * This example is used in the YouTube Video:
+ * "007 - Circular Buffer implementation in C"
+ * (Episode 7 in the cinnamonBun Getting Started series)
+ * https://youtu.be/I8xatqqza6s
+ *
+ * This example builds on the previous episode of the series:
  * "006 - cinnamonBun: Synchronous Vs Asynchronous Function"
  * (Episode 6 in the cinnamonBun Getting Started series)
  * https://youtu.be/UgQnLmEQNH0
  * 
- * This example builds on the previous episode of the series:
- * "005 - cinnamonBun: Hardware Timer Interrupt"
- * (Episode 5 in the cinnamonBun Getting Started series)
- * https://youtu.be/Yrnlxmp2it4
- *
  * Copyright 2017 John Whitmore <jwhitmore@electronicsoup.com>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -34,7 +34,7 @@
 #include <xc.h>
 #include <stdint.h>
 
-#include "morse.h"
+#include "morse.h" 
 
 int main(void)
 {
@@ -51,7 +51,9 @@ int main(void)
 	
 	delay = 0;
 	LATDbits.LATD0 = 1;
-    
+	
+	morse_init();
+	
 	while(1) {
 		delay++;
 		if(delay == 0x3ffff) {
@@ -60,7 +62,7 @@ int main(void)
 		}
         
 		if(PORTDbits.RD2 == 0)
-			morse_tx_the();
+			morse_tx("the quick brown fox.");
     }
     return(0);
 }
