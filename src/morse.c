@@ -8,9 +8,9 @@
  * application code.
  *
  * The example is first used in the YouTube video:
- * "008 - Binary Tree Structure implementation in C"
- * (Episode 8 in the cinnamonBun Getting Started series)
- * https://youtu.be/Bys5v-sWLx8
+ * "009 - Traversing the Tree"
+ * (Episode 9 in the cinnamonBun Getting Started series)
+ * https://youtu.be/60Sfb_Ccm48
  *
  * The file is used in subsiquent episodes in the cinnamonBun Getting Started
  * playlist.
@@ -33,6 +33,9 @@
 #include <stdint.h>
 #include <stddef.h>
 
+/*
+ * Definitions for the Transmit Circular Buffer
+ */
 #define MORSE_TX_BUFFER_SIZE  10
 
 static char tx_buffer[MORSE_TX_BUFFER_SIZE];
@@ -41,6 +44,7 @@ static uint16_t  tx_buffer_read_index = 0;
 static uint16_t  tx_buffer_count = 0;
 
 /*
+ * Definitions for the Binary Tree Structure representation of Morse Code
  */
 struct character
 {
@@ -54,6 +58,30 @@ static struct character alphabet['z' - 'a' + 1];   // Plus 1 for Root Node
 
 #define INDEX(x)  ((x - 'a') + 1)                  // Plus 1 for Root Node
 
+/*
+ * Transmitter state
+ */
+enum transmitter_state {
+	tx_idle,
+	transmitting_element,
+	transmitting_space,
+};
+
+static enum transmitter_state tx_state;
+
+/*
+ * Elements to transmit in current character
+ */
+static uint8_t tx_elements;
+static uint8_t tx_elements_mask;
+
+/*
+ */
+static void tx_char(char ch);
+
+/*
+ * The Code
+ */
 void morse_init(void)
 {
 	uint8_t loop;
@@ -149,15 +177,35 @@ void morse_init(void)
 	alphabet[INDEX('y')].parent = &alphabet[INDEX('k')];
 
 	alphabet[INDEX('z')].parent = &alphabet[INDEX('g')];
+	
+	/*
+	 * Initialise the transmitter state
+	 */
+	tx_state = tx_idle;
+
+	/*
+	 */
+	tx_elements = 0x00;
+	tx_elements_mask = 0x00;
 }
 
 void morse_tx(char *msg)
 {
 	char *ptr = msg;
+
+	/*
+	 * 
+	 */
+	if((tx_buffer_count == 0) && (tx_state == tx_idle)) {
+		while (*ptr < 'a' && *ptr > 'z') {
+			ptr++;
+		}
+		tx_char(*ptr++);
+	}
 	
 	while (*ptr) {
 		/*
-		 * Check that the tx buffer isn't full aready.
+		 * Check that the tx buffer isn't full already.
 		 */
 		if ( tx_buffer_count < MORSE_TX_BUFFER_SIZE ) {
 			
@@ -175,3 +223,41 @@ void morse_tx(char *msg)
 	}
 }
 
+static void tx_char(char ch)
+{
+	struct character *child;
+	struct character *parent;
+	
+	if(tx_elements_mask != 0x00) {
+		/*
+		 * Todo Error condition
+		 */
+		return;
+	}
+	
+	tx_elements = 0x00;
+	tx_elements_mask = 0b0001;
+	
+	child = &alphabet[INDEX(ch)];
+	parent = child->parent;
+	
+	while(parent) {
+		if(parent->dash == child) {
+			/*
+			 * Dash element
+			 */
+			tx_elements = tx_elements | tx_elements_mask;
+		}
+		
+		tx_elements_mask = tx_elements_mask << 1;
+		
+		child = parent;
+		parent = child->parent;
+	}
+
+	tx_elements_mask = tx_elements_mask >> 1;
+	
+	/*
+	 * Turn on the channel and start a timer
+	 */
+}
