@@ -4,3 +4,7 @@
 /nbproject/Makefile-genesis.properties
 /nbproject/Package-default.bash
 /nbproject/private/
+/dist/Sync/
+/build/Sync/
+/dist/Async/
+/build/Async/

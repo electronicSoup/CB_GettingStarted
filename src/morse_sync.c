@@ -1,20 +1,19 @@
 /**
- * @file morse.c
+ * @file morse_sync.c
  *
  * @author John Whitmore
  *
- * This file contains the implementaiton of a very simple API Function to
- * transmit the Morse Code for the word "the" using an LED. The function
- * implementated as a synchronous function to demonstrate the limitations
- * of this style of code.
+ * This file contains the synchronous implementation of the API function
+ * morse_tx_the().
  *
- * The example is first used in the YouTube video:
- * "004 - cinnamonBun: Synchronous Program"
- * (Episode 4 in the cinnamonBun Getting Started series)
- * https://youtu.be/br9gOcxSU1U
+ * This is NOT a good design of an API function as it is very tightly coupled
+ * to the application, or application specific, but it's just being used to
+ * illustrate a synchronous function call.
  *
- * The file is used in subsiquent episodes in the cinnamonBun Getting Started
- * playlist.
+ * The example is used in the YouTube video:
+ * "006 - cinnamonBun: Synchronous Vs Asynchronous Function"
+ * (Episode 6 in the cinnamonBun Getting Started series)
+ * https://youtu.be/UgQnLmEQNH0
  *
  * Copyright 2017 John Whitmore <jwhitmore@electronicsoup.com>
  *
