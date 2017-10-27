@@ -7,15 +7,10 @@
  * a null terminated string, instead of hard coding "the".
  *
  * This example is used in the YouTube Video:
- * "007 - Circular Buffer implementation in C"
- * (Episode 7 in the cinnamonBun Getting Started series)
- * https://youtu.be/I8xatqqza6s
+ * "011 - Platform Independence"
+ * (Episode 11 in the cinnamonBun Getting Started series)
+ * https://youtu.be/FAVVIP_ayYw
  *
- * This example builds on the previous episode of the series:
- * "006 - cinnamonBun: Synchronous Vs Asynchronous Function"
- * (Episode 6 in the cinnamonBun Getting Started series)
- * https://youtu.be/UgQnLmEQNH0
- * 
  * Copyright 2017 John Whitmore <jwhitmore@electronicsoup.com>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -36,6 +31,9 @@
 
 #include "morse.h" 
 
+void morse_on(void);
+void morse_off(void);
+
 int main(void)
 {
 	uint32_t delay;
@@ -52,7 +50,7 @@ int main(void)
 	delay = 0;
 	LATDbits.LATD0 = 1;
 	
-	morse_init();
+	morse_init(morse_on, morse_off);
 	
 	while(1) {
 		delay++;
@@ -66,3 +64,14 @@ int main(void)
     }
     return(0);
 }
+
+void morse_on(void)
+{
+	LATDbits.LATD1 = 1;
+}
+
+void morse_off(void)
+{
+	LATDbits.LATD1 = 0;
+}
+

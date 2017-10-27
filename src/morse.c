@@ -7,13 +7,10 @@
  * "good" version of the API where the module does not impose a policy on the 
  * application code.
  *
- * The example is first used in the YouTube video:
- * "009 - Traversing the Tree"
- * (Episode 9 in the cinnamonBun Getting Started series)
- * https://youtu.be/60Sfb_Ccm48
- *
- * The file is used in subsiquent episodes in the cinnamonBun Getting Started
- * playlist.
+ * This example is used in the YouTube Video:
+ * "011 - Platform Independence"
+ * (Episode 11 in the cinnamonBun Getting Started series)
+ * https://youtu.be/FAVVIP_ayYw
  *
  * Copyright 2017 John Whitmore <jwhitmore@electronicsoup.com>
  *
@@ -45,6 +42,12 @@ static uint16_t  tx_buffer_count = 0;
 
 /*
  * Definitions for the Binary Tree Structure representation of Morse Code
+ * 
+ * This structure is used to create a binary tree structure representing 
+ * the Morse character set, check out the image on wikipedia:
+ * https://en.wikipedia.org/wiki/Morse_code#/media/File:Morse_code_tree3.png 
+ * Each node in the tree stores the character represented by the node, ch, as
+ * well as the three pointers that identify adjacent nodes in the tree.
  */
 struct character
 {
@@ -54,12 +57,22 @@ struct character
 	struct character *dash;
 };
 
+/*
+ * Memory allocation for the nodes making up the binary tree structure.
+ */
 static struct character alphabet['z' - 'a' + 1];   // Plus 1 for Root Node
 
+/*
+ * MACRO to help calculating a node's index in the array given the character,
+ * for example INDEX('a')
+ */
 #define INDEX(x)  ((x - 'a') + 1)                  // Plus 1 for Root Node
 
 /*
- * Transmitter state
+ * Transmitter state:
+ * 
+ * This enumerated type is required to keep track of the transmitter's state so
+ * it isn't clobbered by multiple requests to transmit.
  */
 enum transmitter_state {
 	tx_idle,
@@ -67,25 +80,49 @@ enum transmitter_state {
 	transmitting_space,
 };
 
+/*
+ * Local variable to record the current state of the transmitter
+ */
 static enum transmitter_state tx_state;
 
 /*
- * Elements to transmit in current character
+ * Buffer, 1 byte, to store the elements, Dot and Dash, which make up the 
+ * current character being transmitted, by the module.
+ * 
+ * tx_elements      -  000001011
+ * tx_elements_mask -       ^ 
+ * 
+ * The mask points to the current element being transmitted. The convention is 
+ * that a 0 in the elements buffer represents a Dot element and a 1 represents
+ * a Dash element. So in the example above the character is made up of _ . _ _
+ * or the character 'y' 
  */
 static uint8_t tx_elements;
 static uint8_t tx_elements_mask;
 
 /*
+ * Function pointers to the functions which turn the Morse channel on and off.
+ * These are passed into the initialisation function of the module, 
+ * morse_init().
+ */
+static void (*channel_on)(void) = NULL;
+static void (*channel_off)(void) = NULL;
+
+/*
+ * Function prototypes for local private functions.
  */
 static void tx_char(char ch);
 
 /*
  * The Code
  */
-void morse_init(void)
+void morse_init(void (*fn_on)(void), void (*fn_off)(void))
 {
 	uint8_t loop;
 
+	channel_on = fn_on;
+	channel_off = fn_off;
+	
 	alphabet[0].ch = 0x00;
 	
 	for(loop = 'a'; loop <= 'z'; loop++) {
@@ -194,13 +231,17 @@ void morse_tx(char *msg)
 	char *ptr = msg;
 
 	/*
-	 * 
+	 * If the transmitter is currently idle just transmit the first valid
+	 * character directly without buffering it.
 	 */
 	if((tx_buffer_count == 0) && (tx_state == tx_idle)) {
-		while (*ptr < 'a' && *ptr > 'z') {
+		/*
+		 * Ignore all the invalid characters at the start of the string.
+		 */
+		while (*ptr && (*ptr < 'a' || *ptr > 'z')) {
 			ptr++;
 		}
-		tx_char(*ptr++);
+		if(*ptr) tx_char(*ptr++);
 	}
 	
 	while (*ptr) {
@@ -260,4 +301,11 @@ static void tx_char(char ch)
 	/*
 	 * Turn on the channel and start a timer
 	 */
+	if(channel_on) channel_on();
+	
+	if(tx_elements & tx_elements_mask) {
+		// Transmit Dash - start timer accordingly
+	} else {
+		// Transmit Dot - start timer accordingly		
+	}
 }

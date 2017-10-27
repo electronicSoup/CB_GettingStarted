@@ -6,10 +6,10 @@
  * This file contains the public API declarations of Functions provided by
  * the Morse Module implemeted in morse.c.
  *
- * The example is first used in the YouTube video:
- * "007 - Circular Buffer implementation in C"
- * (Episode 7 in the cinnamonBun Getting Started series)
- * https://youtu.be/I8xatqqza6s
+ * This example is used in the YouTube Video:
+ * "011 - Platform Independence"
+ * (Episode 11 in the cinnamonBun Getting Started series)
+ * https://youtu.be/FAVVIP_ayYw
  *
  * The file is used in subsiquent episodes in the cinnamonBun Getting Started
  * playlist.
@@ -35,5 +35,5 @@
  * using any of the other API functions of this module. Failure to do so will
  * result in unknown behaviour.
  */
-extern void morse_init(void);
+extern void morse_init(void (*fn_on)(void), void (*fn_off)(void));
 extern void morse_tx(char *);
