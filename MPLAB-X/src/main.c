@@ -29,7 +29,7 @@
 #include <xc.h>
 #include <stdint.h>
 
-#include "morse.h" 
+#include "libmorse/morse.h" 
 
 void morse_on(void);
 void morse_off(void);
