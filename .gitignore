@@ -10,3 +10,8 @@ MPLAB-X/dist/Async/
 MPLAB-X/build/Async/
 MPLAB-X/dist/Good_API/
 MPLAB-X/build/Good_API/
+
+MCUXpresso/lpc_board_nxp_lpcxpresso_1769
+MCUXpresso/lpc_chip_175x_6x
+MCUXpresso/.metadata
+MCUXpresso/Morse/Debug
