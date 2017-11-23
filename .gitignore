@@ -13,6 +13,11 @@ MPLAB-X/build/Good_API/
 
 MCUXpresso/lpc_board_nxp_lpcxpresso_1769
 MCUXpresso/lpc_chip_175x_6x
+MCUXpresso/periph_timer
+MCUXpresso/FreeRTOS_TAD_logs
+
 MCUXpresso/.metadata
 MCUXpresso/Morse/Debug
 MCUXpresso/HelloWorld/Debug
+
+*.launch

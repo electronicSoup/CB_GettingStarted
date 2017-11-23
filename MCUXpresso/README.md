@@ -10,3 +10,8 @@ To get the project to build two LPCOpen projects
 lpc_board_nxp_lpcxpresso_1769 and lpc_chip_175x_6x will have to be
 added to the workspace. These projects are available for NXP at
 https://www.nxp.com/support/developer-resources/software-development-tools/lpc-developer-resources-/lpcopen-libraries-and-examples:LPC-OPEN-LIBRARIES?fsrch=1&sr=1&pageNum=1
+
+
+The schematic for the NXP OM13085 is available at
+https://www.nxp.com/downloads/en/schematics/LPCXpresso-LPC1769-CMSIS-DAP.pdf
+

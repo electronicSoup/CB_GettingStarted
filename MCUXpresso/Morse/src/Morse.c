@@ -34,12 +34,20 @@ int main(void) {
     // Set up and initialize all required blocks and
     // functions related to the board hardware
     Board_Init();
-    // Set the LED to the state of "On"
-    Board_LED_Set(0, true);
 #endif
 #endif
 
     // TODO: insert code here
+    /*
+     * Turn off the RGB Led
+     */
+    Chip_GPIO_Init(LPC_GPIO);
+    Chip_GPIO_SetPinDIROutput(LPC_GPIO, 0, 22);
+    Chip_GPIO_SetPinDIROutput(LPC_GPIO, 3, 26);
+    Chip_GPIO_SetPinDIROutput(LPC_GPIO, 3, 25);
+    Chip_GPIO_SetPinOutHigh(LPC_GPIO, 0, 22);
+    Chip_GPIO_SetPinOutHigh(LPC_GPIO, 3, 26);
+    Chip_GPIO_SetPinOutHigh(LPC_GPIO, 3, 25);
 
     // Force the counter to be placed into memory
     volatile static int i = 0 ;
