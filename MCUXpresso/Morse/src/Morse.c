@@ -25,6 +25,7 @@
 void morse_on(void);
 void morse_off(void);
 
+#if defined(__GNUC__) && defined(LPC1769)
 int main(void) {
 
 #if defined (__USE_LPCOPEN)
@@ -60,6 +61,7 @@ int main(void) {
     }
     return 0 ;
 }
+#endif  // __GNUC__ && LPC1769
 
 void morse_on(void)
 {
