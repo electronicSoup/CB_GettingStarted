@@ -12,6 +12,119 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="libesoup" displayName="libesoup" projectFiles="true">
+        <logicalFolder name="boards" displayName="boards" projectFiles="true">
+          <logicalFolder name="cinnamonBun" displayName="cinnamonBun" projectFiles="true">
+            <logicalFolder name="dsPIC33" displayName="dsPIC33" projectFiles="true">
+              <itemPath>src/libesoup/boards/cinnamonBun/dsPIC33/board.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="pic24FJ" displayName="pic24FJ" projectFiles="true">
+              <itemPath>src/libesoup/boards/cinnamonBun/pic24FJ/board.c</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="gauge" displayName="gauge" projectFiles="true">
+            <itemPath>src/libesoup/boards/gauge/board.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="rpi" displayName="rpi" projectFiles="true">
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="comms" displayName="comms" projectFiles="true">
+          <logicalFolder name="can" displayName="can" projectFiles="true">
+            <logicalFolder name="dcncp" displayName="dcncp" projectFiles="true">
+              <itemPath>src/libesoup/comms/can/dcncp/dcncp_can.c</itemPath>
+              <itemPath>src/libesoup/comms/can/dcncp/dcncp_iso15765.c</itemPath>
+            </logicalFolder>
+            <itemPath>src/libesoup/comms/can/ping.c</itemPath>
+            <itemPath>src/libesoup/comms/can/frame_dispatch.c</itemPath>
+            <itemPath>src/libesoup/comms/can/l2_mcp2515.c</itemPath>
+            <itemPath>src/libesoup/comms/can/l2_pic18f.c</itemPath>
+            <itemPath>src/libesoup/comms/can/l3_iso11783-3.c</itemPath>
+            <itemPath>src/libesoup/comms/can/dynamic_baud_rate.c</itemPath>
+            <itemPath>src/libesoup/comms/can/baud_auto_detect.c</itemPath>
+            <itemPath>src/libesoup/comms/can/l2_lx_can.c</itemPath>
+            <itemPath>src/libesoup/comms/can/l2_dsPIC33EP256MU806.c</itemPath>
+            <itemPath>src/libesoup/comms/can/l3_iso15765-2.c</itemPath>
+            <itemPath>src/libesoup/comms/can/can.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="modbus" displayName="modbus" projectFiles="true">
+            <logicalFolder name="modbus_states"
+                           displayName="modbus_states"
+                           projectFiles="true">
+              <itemPath>src/libesoup/comms/modbus/modbus_states/modbus_starting.c</itemPath>
+              <itemPath>src/libesoup/comms/modbus/modbus_states/modbus_idle.c</itemPath>
+              <itemPath>src/libesoup/comms/modbus/modbus_states/modbus_transmitting.c</itemPath>
+              <itemPath>src/libesoup/comms/modbus/modbus_states/modbus_awaiting_response.c</itemPath>
+            </logicalFolder>
+            <itemPath>src/libesoup/comms/modbus/modbus.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="morse" displayName="morse" projectFiles="true">
+            <itemPath>src/libesoup/comms/morse/morse.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="one_wire" displayName="one_wire" projectFiles="true">
+            <logicalFolder name="devices" displayName="devices" projectFiles="true">
+              <itemPath>src/libesoup/comms/one_wire/devices/ds2502.c</itemPath>
+            </logicalFolder>
+            <itemPath>src/libesoup/comms/one_wire/one_wire.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="spi" displayName="spi" projectFiles="true">
+            <itemPath>src/libesoup/comms/spi/spi.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="uart" displayName="uart" projectFiles="true">
+            <itemPath>src/libesoup/comms/uart/uart.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="usb" displayName="usb" projectFiles="true">
+            <logicalFolder name="android" displayName="android" projectFiles="true">
+              <itemPath>src/libesoup/comms/usb/android/usb_config.c</itemPath>
+              <itemPath>src/libesoup/comms/usb/android/state_idle.c</itemPath>
+              <itemPath>src/libesoup/comms/usb/android/android_comms.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="xpad" displayName="xpad" projectFiles="true">
+              <itemPath>src/libesoup/comms/usb/xpad/usb_config.c</itemPath>
+              <itemPath>src/libesoup/comms/usb/xpad/usb_host_xpad.c</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="firmware" displayName="firmware" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="gpio" displayName="gpio" projectFiles="true">
+          <itemPath>src/libesoup/gpio/peripheral.c</itemPath>
+          <itemPath>src/libesoup/gpio/gpio.c</itemPath>
+          <itemPath>src/libesoup/gpio/adc.c</itemPath>
+          <itemPath>src/libesoup/gpio/change_notification.c</itemPath>
+        </logicalFolder>
+        <logicalFolder name="hardware" displayName="hardware" projectFiles="true">
+          <itemPath>src/libesoup/hardware/flash.c</itemPath>
+          <itemPath>src/libesoup/hardware/eeprom.c</itemPath>
+        </logicalFolder>
+        <logicalFolder name="jobs" displayName="jobs" projectFiles="true">
+          <itemPath>src/libesoup/jobs/jobs.c</itemPath>
+        </logicalFolder>
+        <logicalFolder name="logger" displayName="logger" projectFiles="true">
+          <itemPath>src/libesoup/logger/iso15765_log.c</itemPath>
+          <itemPath>src/libesoup/logger/serial_log.c</itemPath>
+        </logicalFolder>
+        <logicalFolder name="processors" displayName="processors" projectFiles="true">
+          <itemPath>src/libesoup/processors/pic18f4585.c</itemPath>
+          <itemPath>src/libesoup/processors/pic18f2680.c</itemPath>
+          <itemPath>src/libesoup/processors/rpi.c</itemPath>
+          <itemPath>src/libesoup/processors/dsPIC33EP256MU806.c</itemPath>
+          <itemPath>src/libesoup/processors/pic24FJ256GB106.c</itemPath>
+        </logicalFolder>
+        <logicalFolder name="status" displayName="status" projectFiles="true">
+          <itemPath>src/libesoup/status/status.c</itemPath>
+        </logicalFolder>
+        <logicalFolder name="timers" displayName="timers" projectFiles="true">
+          <itemPath>src/libesoup/timers/delay.c</itemPath>
+          <itemPath>src/libesoup/timers/sw_rtc.c</itemPath>
+          <itemPath>src/libesoup/timers/hw_timers.c</itemPath>
+          <itemPath>src/libesoup/timers/hw_rtc.c</itemPath>
+          <itemPath>src/libesoup/timers/sw_timers.c</itemPath>
+        </logicalFolder>
+        <logicalFolder name="utils" displayName="utils" projectFiles="true">
+          <itemPath>src/libesoup/utils/rand.c</itemPath>
+        </logicalFolder>
+        <itemPath>src/libesoup/core.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="libmorse" displayName="libmorse" projectFiles="true">
         <itemPath>../libmorse/morse.c</itemPath>
       </logicalFolder>
@@ -39,7 +152,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>1.31</languageToolchainVersion>
+        <languageToolchainVersion>1.33</languageToolchainVersion>
         <platform>2</platform>
       </toolsSet>
       <compileType>
@@ -81,7 +194,7 @@
         <property key="enable-short-double" value="false"/>
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
-        <property key="extra-include-directories" value="../"/>
+        <property key="extra-include-directories" value="../;src"/>
         <property key="isolate-each-function" value="false"/>
         <property key="keep-inline" value="false"/>
         <property key="oXC16gcc-align-arr" value="false"/>
