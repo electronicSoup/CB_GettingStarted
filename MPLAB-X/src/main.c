@@ -1,20 +1,17 @@
 /**
- * @file main.c
  *
- * @author John Whitmore
+ * libesoup/examples/main_barebones.c
  *
- * This file contains the code to exercise the improved Morse API which accepts
- * a null terminated string, instead of hard coding "the".
+ * An example main.c file for the bare bones minimum required to use the
+ * libesoup library of code.
+ * 
+ * The code is used in the example MPLAB-X project:
+ * libesoup/examples/projects/microchip/BareBones.X
  *
- * This example is used in the YouTube Video:
- * "011 - Platform Independence"
- * (Episode 11 in the cinnamonBun Getting Started series)
- * https://youtu.be/FAVVIP_ayYw
- *
- * Copyright 2017 John Whitmore <jwhitmore@electronicsoup.com>
+ * Copyright 2018 electronicSoup Limited
  *
  * This program is free software; you can redistribute it and/or modify
- * it under the terms of the version 3 of the GNU General Public License
+ * it under the terms of the version 2 of the GNU Lesser General Public License
  * as published by the Free Software Foundation
  *
  * This program is distributed in the hope that it will be useful,
@@ -22,56 +19,61 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
+ * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
+ *******************************************************************************
+ *
  */
-#include <xc.h>
-#include <stdint.h>
+#include "libesoup_config.h"
+#include "libesoup/timers/delay.h"
+//#include "libesoup/timers/hw_timers.h"
+#include "libesoup/timers/sw_timers.h"
 
-#include "libmorse/morse.h" 
-
-void morse_on(void);
-void morse_off(void);
-
-int main(void)
+void exp_fn(timer_id timer, union sigval data)
 {
-	uint32_t delay;
+	LATDbits.LATD3 = ~PORTDbits.RD3;
+}
 
-	/*
-	 * GPIO Setup
-         * Port D lower Byte Digital IO Pins
-         */
-	ANSELD = 0x00;
+int main()
+{
+	result_t          rc;
+	struct timer_req  request;
+
 	TRISDbits.TRISD0 = 0;
-	TRISDbits.TRISD1 = 0;
-	TRISDbits.TRISD2 = 1;
+	LATDbits.LATD0 = 0;
 	
-	delay = 0;
-	LATDbits.LATD0 = 1;
+	TRISDbits.TRISD3 = 0;
+	LATDbits.LATD3 = 0;
+
+	rc = libesoup_init();
+	if(rc < 0) {
+		// ERROR
+		LATDbits.LATD0 = 1;
+	}
 	
-	morse_init(morse_on, morse_off);
+	delay(Seconds, 2);
+	if(rc < 0) {
+		// ERROR
+		LATDbits.LATD0 = 1;
+	}
+
+	request.units          = mSeconds;
+	request.duration       = 200;
+	request.type           = repeat;
+	request.exp_fn         = exp_fn;
+	request.data.sival_int = 0;
 	
+	LATDbits.LATD3 = 1;
+	rc = sw_timer_start(&request);
+	if(rc < 0) {
+		// ERROR
+		LATDbits.LATD0 = 1;
+	}
+
 	while(1) {
-		delay++;
-		if(delay == 0x3ffff) {
-			delay = 0;
-			LATDbits.LATD0 = ~LATDbits.LATD0;
-		}
-        
-		if(PORTDbits.RD2 == 0)
-			morse_tx("the quick brown fox.");
-    }
-    return(0);
+		CHECK_TIMERS()
+		// 25mS peocessing !
+		Nop();
+	}
 }
-
-void morse_on(void)
-{
-	LATDbits.LATD1 = 1;
-}
-
-void morse_off(void)
-{
-	LATDbits.LATD1 = 0;
-}
-
