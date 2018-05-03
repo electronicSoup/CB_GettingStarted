@@ -1,0 +1,3 @@
+[submodule "MPLAB-X/src/libesoup"]
+	path = MPLAB-X/src/libesoup
+	url = git@github.com:electronicSoup/libesoup.git
