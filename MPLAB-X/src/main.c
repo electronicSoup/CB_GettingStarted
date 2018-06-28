@@ -30,6 +30,10 @@
 //#include "libesoup/timers/hw_timers.h"
 #include "libesoup/timers/sw_timers.h"
 
+//#define DEBUG_FILE
+static const char *TAG = "MAIN";
+#include "libesoup/logger/serial_log.h"
+
 void exp_fn(timer_id timer, union sigval data)
 {
 	LATDbits.LATD3 = ~PORTDbits.RD3;
@@ -70,6 +74,12 @@ int main()
 		// ERROR
 		LATDbits.LATD0 = 1;
 	}
+        
+//        serial_log(LOG_DEBUG, TAG, "Hello World\n\r");
+        LOG_D("Entering main loop\n\r");
+        LOG_I("Information message\n\r");
+        LOG_W("Warning!\n\r");
+        LOG_E("ERROR!!!\n\r");
 
 	while(1) {
 		CHECK_TIMERS()
