@@ -34,6 +34,13 @@
 static const char *TAG = "MAIN";
 #include "libesoup/logger/serial_log.h"
 
+#define MAX3221E_RX          RD1
+#define MAX3221E_INVALID     RD2
+#define MAX3221E_TX          RD3
+#define MAX3221E_FORCEON     RD4
+#define MAX3221E_FORCEOFF    RD5
+#define MAX3221E_ENABLE      RD6
+
 void exp_fn(timer_id timer, union sigval data)
 {
 	LATDbits.LATD3 = ~PORTDbits.RD3;
