@@ -30,7 +30,7 @@
 //#include "libesoup/timers/hw_timers.h"
 #include "libesoup/timers/sw_timers.h"
 
-//#define DEBUG_FILE
+#define DEBUG_FILE
 static const char *TAG = "MAIN";
 #include "libesoup/logger/serial_log.h"
 

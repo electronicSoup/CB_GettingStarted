@@ -37,9 +37,9 @@
 #define SYS_UART
 #define SYS_UART_TX_BUFFER_SIZE      256
 
-//#define SYS_SERIAL_LOGGING
+#define SYS_SERIAL_LOGGING
 #define SYS_SERIAL_PORT_GndRxTx
-#define SYS_LOG_LEVEL                LOG_WARNING    // LOG_INFO, LOG_WARNING, LOG_ERROR
+#define SYS_LOG_LEVEL                LOG_DEBUG    // LOG_INFO, LOG_WARNING, LOG_ERROR
 #define SYS_SERIAL_LOGGING_BAUD      19200
 
 #include "libesoup/boards/cinnamonBun/dsPIC33/cb-dsPIC33EP256MU806.h"
