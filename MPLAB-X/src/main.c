@@ -27,8 +27,9 @@
  */
 #include "libesoup_config.h"
 #include "libesoup/timers/delay.h"
-//#include "libesoup/timers/hw_timers.h"
 #include "libesoup/timers/sw_timers.h"
+#include "libesoup/gpio/gpio.h"
+#include "libesoup/comms/uart/uart.h"
 
 #define DEBUG_FILE
 static const char *TAG = "MAIN";
@@ -41,6 +42,8 @@ static const char *TAG = "MAIN";
 #define MAX3221E_FORCEOFF    RD5
 #define MAX3221E_ENABLE      RD6
 
+#define RC_CHECK_STOP        if (rc <0) while (1);
+
 void exp_fn(timer_id timer, union sigval data)
 {
 }
@@ -51,7 +54,8 @@ int main()
 	struct timer_req  request;
 
 	rc = libesoup_init();
-	
+	RC_CHECK_STOP
+
 	request.units          = mSeconds;
 	request.duration       = 200;
 	request.type           = repeat;
