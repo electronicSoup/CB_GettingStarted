@@ -56,6 +56,24 @@ int main()
 	rc = libesoup_init();
 	RC_CHECK_STOP
 
+	rc = gpio_set(MAX3221E_RX, GPIO_MODE_DIGITAL_INPUT, 0);
+	RC_CHECK_STOP
+
+	rc = gpio_set(MAX3221E_TX, GPIO_MODE_DIGITAL_OUTPUT, 0);
+	RC_CHECK_STOP
+
+	rc = gpio_set(MAX3221E_ENABLE, GPIO_MODE_DIGITAL_OUTPUT, 0);
+	RC_CHECK_STOP
+
+	rc = gpio_set(MAX3221E_FORCEON, GPIO_MODE_DIGITAL_OUTPUT, 1);
+	RC_CHECK_STOP
+
+	rc = gpio_set(MAX3221E_FORCEOFF, GPIO_MODE_DIGITAL_OUTPUT, 1);
+	RC_CHECK_STOP
+
+	rc = gpio_set(MAX3221E_INVALID, GPIO_MODE_DIGITAL_INPUT, 0);
+	RC_CHECK_STOP
+
 	request.units          = mSeconds;
 	request.duration       = 200;
 	request.type           = repeat;
