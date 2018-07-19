@@ -45,9 +45,14 @@ static const char *TAG = "MAIN";
 #define RC_CHECK_STOP        if (rc <0) while (1);
 
 static struct uart_data   uart;
+static uint8_t test_buffer[] = "Test";
 
 void exp_fn(timer_id timer, union sigval data)
 {
+	result_t rc;
+	
+	rc = uart_tx_buffer(&uart, test_buffer, 4);
+	RC_CHECK_STOP
 }
 
 void rx_char(uint8_t ch)
@@ -97,8 +102,8 @@ int main()
 	rc = uart_reserve(&uart);
 	RC_CHECK_STOP
 		
-	request.units          = mSeconds;
-	request.duration       = 200;
+	request.units          = Seconds;
+	request.duration       = 10;
 	request.type           = repeat;
 	request.exp_fn         = exp_fn;
 	request.data.sival_int = 0;
