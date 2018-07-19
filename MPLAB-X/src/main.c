@@ -43,7 +43,6 @@ static const char *TAG = "MAIN";
 
 void exp_fn(timer_id timer, union sigval data)
 {
-	LATDbits.LATD3 = ~PORTDbits.RD3;
 }
 
 int main()
@@ -51,46 +50,18 @@ int main()
 	result_t          rc;
 	struct timer_req  request;
 
-	TRISDbits.TRISD0 = 0;
-	LATDbits.LATD0 = 0;
-	
-	TRISDbits.TRISD3 = 0;
-	LATDbits.LATD3 = 0;
-
 	rc = libesoup_init();
-	if(rc < 0) {
-		// ERROR
-		LATDbits.LATD0 = 1;
-	}
 	
-	delay(Seconds, 2);
-	if(rc < 0) {
-		// ERROR
-		LATDbits.LATD0 = 1;
-	}
-
 	request.units          = mSeconds;
 	request.duration       = 200;
 	request.type           = repeat;
 	request.exp_fn         = exp_fn;
 	request.data.sival_int = 0;
 	
-	LATDbits.LATD3 = 1;
 	rc = sw_timer_start(&request);
-	if(rc < 0) {
-		// ERROR
-		LATDbits.LATD0 = 1;
-	}
         
-//        serial_log(LOG_DEBUG, TAG, "Hello World\n\r");
-        LOG_D("Entering main loop\n\r");
-        LOG_I("Information message\n\r");
-        LOG_W("Warning!\n\r");
-        LOG_E("ERROR!!!\n\r");
-
 	while(1) {
 		CHECK_TIMERS()
-		// 25mS peocessing !
 		Nop();
 	}
 }
