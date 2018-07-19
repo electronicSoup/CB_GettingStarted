@@ -44,10 +44,16 @@ static const char *TAG = "MAIN";
 
 #define RC_CHECK_STOP        if (rc <0) while (1);
 
+static struct uart_data   uart;
+
 void exp_fn(timer_id timer, union sigval data)
 {
 }
 
+void rx_char(uint8_t ch)
+{
+	LOG_D("rx_char(%c)\n\r", ch);
+}
 int main()
 {
 	result_t          rc;
@@ -74,6 +80,23 @@ int main()
 	rc = gpio_set(MAX3221E_INVALID, GPIO_MODE_DIGITAL_INPUT, 0);
 	RC_CHECK_STOP
 
+	/*
+	 * Initialise the UART connected to the MAX3221E
+	 */
+	rc = uart_calculate_mode(&uart.uart_mode, UART_8_DATABITS, UART_PARITY_NONE, UART_ONE_STOP_BIT, UART_IDLE_HIGH);
+	RC_CHECK_STOP
+
+	uart.tx_pin = MAX3221E_TX;
+	uart.rx_pin = MAX3221E_RX;
+	uart.baud = 9600;                // Nice relaxed baud rate
+	uart.process_rx_char = rx_char;
+	
+	/*
+	 * Reserve a UART channel for our use
+	 */
+	rc = uart_reserve(&uart);
+	RC_CHECK_STOP
+		
 	request.units          = mSeconds;
 	request.duration       = 200;
 	request.type           = repeat;
