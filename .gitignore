@@ -21,3 +21,5 @@ MCUXpresso/Morse/Debug
 MCUXpresso/HelloWorld/Debug
 
 *.launch
+/MPLAB-X/build/cinnamonBun/
+/MPLAB-X/dist/cinnamonBun/
