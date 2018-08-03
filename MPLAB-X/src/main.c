@@ -64,9 +64,13 @@ static uint8_t test_buffer[] = "Test";
 void exp_fn(timer_id timer, union sigval data)
 {
 	result_t rc;
-	
+
+	serial_printf(".");	
 #ifdef SN65HVD72D
 	rc = gpio_set(SN65HVD72D_TX_ENABLE, GPIO_MODE_DIGITAL_OUTPUT, SN65HVD72D_SEND);
+	RC_CHECK_STOP
+
+	rc = delay(mSeconds, 500);
 	RC_CHECK_STOP
 #endif
 	rc = uart_tx_buffer(&uart, test_buffer, 4);
@@ -77,6 +81,9 @@ void exp_fn(timer_id timer, union sigval data)
 void tx_finished(void *data)
 {
 	result_t rc;
+	
+	rc = delay(mSeconds, 500);
+	RC_CHECK_STOP
 	
 	rc = gpio_set(SN65HVD72D_TX_ENABLE, GPIO_MODE_DIGITAL_OUTPUT, SN65HVD72D_RECEIVE);
 	RC_CHECK_STOP	
@@ -158,6 +165,8 @@ int main()
 	
 	rc = sw_timer_start(&request);
         
+	LOG_D("Entering main loop\n\r");
+	
 	while(1) {
 		CHECK_TIMERS()
 		Nop();
