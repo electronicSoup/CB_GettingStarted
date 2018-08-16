@@ -151,17 +151,17 @@ int main()
 	rc = uart_reserve(&uart);
 	RC_CHECK_STOP
 		
-	request.units          = Seconds;
-	request.duration       = 10;
-	request.type           = repeat;
-	request.exp_fn         = exp_fn;
+	request.period.units    = Seconds;
+	request.period.duration = 10;
+	request.type            = repeat;
+	request.exp_fn          = exp_fn;
 	
 	rc = sw_timer_start(&request);
         
 	LOG_D("Entering main loop\n\r");
 	
 	while(1) {
-		CHECK_TIMERS()
+		libesoup_tasks();
 		Nop();
 	}
 }

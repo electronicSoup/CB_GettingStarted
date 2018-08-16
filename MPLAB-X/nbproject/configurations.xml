@@ -89,7 +89,6 @@
         <logicalFolder name="gpio" displayName="gpio" projectFiles="true">
           <itemPath>src/libesoup/gpio/peripheral.c</itemPath>
           <itemPath>src/libesoup/gpio/gpio.c</itemPath>
-          <itemPath>src/libesoup/gpio/adc.c</itemPath>
           <itemPath>src/libesoup/gpio/change_notification.c</itemPath>
         </logicalFolder>
         <logicalFolder name="hardware" displayName="hardware" projectFiles="true">
