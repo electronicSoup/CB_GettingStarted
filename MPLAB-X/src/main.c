@@ -36,7 +36,7 @@ static const char *TAG = "MAIN";
 #include "libesoup/logger/serial_log.h"
 
 #define SN65HVD72D
-
+//#define MAX3221
 
 #ifdef MAX3221
 #define MAX3221E_RX          RD1
@@ -69,9 +69,6 @@ void exp_fn(timer_id timer, union sigval data)
 #ifdef SN65HVD72D
 	rc = gpio_set(SN65HVD72D_TX_ENABLE, GPIO_MODE_DIGITAL_OUTPUT, SN65HVD72D_SEND);
 	RC_CHECK_STOP
-
-	rc = delay(mSeconds, 500);
-	RC_CHECK_STOP
 #endif
 	rc = uart_tx_buffer(&uart, test_buffer, 4);
 	RC_CHECK_STOP
@@ -81,9 +78,6 @@ void exp_fn(timer_id timer, union sigval data)
 void tx_finished(void *data)
 {
 	result_t rc;
-	
-	rc = delay(mSeconds, 500);
-	RC_CHECK_STOP
 	
 	rc = gpio_set(SN65HVD72D_TX_ENABLE, GPIO_MODE_DIGITAL_OUTPUT, SN65HVD72D_RECEIVE);
 	RC_CHECK_STOP	
@@ -161,7 +155,6 @@ int main()
 	request.duration       = 10;
 	request.type           = repeat;
 	request.exp_fn         = exp_fn;
-	request.data.sival_int = 0;
 	
 	rc = sw_timer_start(&request);
         
